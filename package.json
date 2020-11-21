@@ -1,0 +1,17 @@
+{
+  "name": "generator-eslint-airbnb-prettier",
+  "version": "0.1.0",
+  "description": "Creates a web project with tooling from airbnb eslint and prettier",
+  "files": [
+    "app",
+    "react"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "nilzona",
+  "license": "ISC",
+  "dependencies": {
+    "yeoman-generator": "^4.12.0"
+  }
+}
