@@ -1,17 +1,11 @@
 {
-  "root": true,
-  "extends": ["airbnb/base", "prettier"],
-  "plugins": ["prettier"],
+  "extends": ["airbnb", "plugin:react/recommended", "plugin:prettier/recommended", "prettier/react"],
+  "plugins": ["react-hooks"],
   "env": {
     "browser": true
   },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
   "rules": {
-    "no-plusplus": 0,
-    "prettier/prettier": ["error"]
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
