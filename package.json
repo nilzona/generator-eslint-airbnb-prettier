@@ -8,7 +8,7 @@
   "version": "0.1.1",
   "description": "Creates a web project with tooling from airbnb eslint and prettier",
   "files": [
-    "app"
+    "generators"
   ],
   "keywords": [
     "yeoman-generator"
