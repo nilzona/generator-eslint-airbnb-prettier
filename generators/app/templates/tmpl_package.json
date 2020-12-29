@@ -6,9 +6,7 @@
     "name": "<%= gitname %>",
     "email": "<%= gitemail %>"
   },
-  "files": [
-    "build"
-  ],
+  "files": ["dist"],
   "scripts": {
     "start": "webpack serve --mode=development --progress",
     "build": "webpack --mode=production --progress",
@@ -17,18 +15,6 @@
   },
   "dependencies": {},
   "devDependencies": {},
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"

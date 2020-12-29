@@ -1,9 +1,16 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = (env) => ({
-  entry: path.resolve(__dirname, 'src/index.jsx'),
+module.exports = {
+  entry: {
+    app: path.resolve(__dirname, 'src/index.js'),
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+  },
   module: {
     rules: [
       {
@@ -11,21 +18,27 @@ module.exports = (env) => ({
         exclude: /node_modules/,
         use: [{ loader: 'babel-loader' }],
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
   devServer: {
-    stats: 'minimal',
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, './dist'),
   },
-  stats: 'minimal',
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: 'public/index.ejs',
       templateParameters: {
         name: '<%= name %>',
       },
@@ -35,11 +48,8 @@ module.exports = (env) => ({
       patterns: [
         {
           from: 'public',
-          globOptions: {
-            ignore: ['**/index.ejs'],
-          },
         },
       ],
     }),
   ],
-});
+};

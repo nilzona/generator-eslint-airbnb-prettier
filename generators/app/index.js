@@ -1,6 +1,6 @@
-const Generator = require("yeoman-generator");
-const path = require("path");
-const fs = require("fs");
+const Generator = require('yeoman-generator');
+const path = require('path');
+const fs = require('fs');
 
 const promisedExist = (pathToCheck) => {
   return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ module.exports = class extends (
 ) {
   async initializing() {
     const isGitDirectory = await promisedExist(
-      path.join(process.cwd(), ".git")
+      path.join(process.cwd(), '.git')
     );
     if (!isGitDirectory) {
       this.log(
@@ -31,26 +31,26 @@ module.exports = class extends (
   async prompting() {
     this.answers = await this.prompt([
       {
-        type: "input",
-        name: "name",
-        message: "Your project name",
+        type: 'input',
+        name: 'name',
+        message: 'Your project name',
         default: path.basename(process.cwd()),
       },
       {
-        type: "list",
-        name: "npm_yarn",
-        message: "use npm or yarn",
-        choices: ["npm", "yarn"],
-        default: "npm",
+        type: 'list',
+        name: 'npm_yarn',
+        message: 'use npm or yarn',
+        choices: ['npm', 'yarn'],
+        default: 'npm',
       },
     ]);
   }
   writing() {
-    const templates = ["tmpl_package.json", "README.md", "webpack.config.js"];
+    const templates = ['tmpl_package.json', 'README.md', 'webpack.config.js'];
     templates.forEach((template) => {
       this.fs.copyTpl(
         this.templatePath(template),
-        this.destinationPath(template.replace("tmpl_", "")),
+        this.destinationPath(template.replace('tmpl_', '')),
         {
           name: this.answers.name,
           gitname: this.user.git.name(),
@@ -59,19 +59,21 @@ module.exports = class extends (
       );
     });
     const files = [
-      "public/favicon.ico",
-      "public/index.ejs",
-      "public/manifest.json",
-      "src/index.jsx",
-      "src/App.jsx",
-      ".babelrc",
-      ".editorconfig",
-      ".eslintrc",
-      ".eslintignore",
-      ".gitignore",
-      ".prettierrc",
-      ".prettierignore",
-      "LICENSE",
+      'public/favicon.ico',
+      'public/manifest.json',
+      'src/App.jsx',
+      'src/check.gif',
+      'src/index.ejs',
+      'src/index.js',
+      'src/main.css',
+      '.babelrc',
+      '.editorconfig',
+      '.eslintrc',
+      '.eslintignore',
+      '.gitignore',
+      '.prettierrc',
+      '.prettierignore',
+      'LICENSE',
     ];
     files.forEach((file) => {
       this.fs.copy(this.templatePath(file), this.destinationPath(file));
@@ -79,43 +81,46 @@ module.exports = class extends (
   }
   installingDeps() {
     const devDeps = [
-      "@babel/core",
-      "@babel/preset-env",
-      "@babel/preset-react",
-      "babel-loader",
-      "copy-webpack-plugin",
-      "eslint",
-      "eslint-config-airbnb",
-      "eslint-config-prettier",
-      "eslint-plugin-import",
-      "eslint-plugin-jsx-a11y",
-      "eslint-plugin-prettier",
-      "eslint-plugin-react",
-      "eslint-plugin-react-hooks",
-      "html-webpack-plugin",
-      "husky",
-      "prettier",
-      "pretty-quick",
-      "webpack",
-      "webpack-cli",
-      "webpack-dev-server",
+      '@babel/core',
+      '@babel/preset-env',
+      '@babel/preset-react',
+      'babel-loader',
+      'clean-webpack-plugin',
+      'copy-webpack-plugin',
+      'css-loader',
+      'eslint',
+      'eslint-config-airbnb',
+      'eslint-config-prettier',
+      'eslint-plugin-import',
+      'eslint-plugin-jsx-a11y',
+      'eslint-plugin-prettier',
+      'eslint-plugin-react',
+      'eslint-plugin-react-hooks',
+      'html-webpack-plugin',
+      'husky',
+      'prettier',
+      'pretty-quick',
+      'style-loader',
+      'webpack',
+      'webpack-cli',
+      'webpack-dev-server',
     ];
-    const deps = ["react", "react-dom", "prop-types"];
-    if (this.answers.npm_yarn === "npm") {
-      this.npmInstall(devDeps, { "save-dev": true });
-      this.npmInstall(deps, { "save-dev": false });
+    const deps = ['react', 'react-dom', 'prop-types'];
+    if (this.answers.npm_yarn === 'npm') {
+      this.npmInstall(devDeps, { 'save-dev': true });
+      this.npmInstall(deps, { 'save-dev': false });
     } else {
       this.yarnInstall(devDeps, { dev: true });
       this.yarnInstall(deps, { dev: false });
     }
   }
   end() {
-    if (this.answers.npm_yarn === "npm") {
-      this.log("build with `npm run build`");
-      this.log("start development with `npm start`");
+    if (this.answers.npm_yarn === 'npm') {
+      this.log('build with `npm run build`');
+      this.log('start development with `npm start`');
     } else {
-      this.log("build with `yarn run build`");
-      this.log("start development with `yarn start`");
+      this.log('build with `yarn build`');
+      this.log('start development with `yarn start`');
     }
   }
 };
