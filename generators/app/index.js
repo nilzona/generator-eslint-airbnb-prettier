@@ -43,75 +43,25 @@ module.exports = class extends (
         choices: ['npm', 'yarn'],
         default: 'npm',
       },
+      {
+        type: 'confirm',
+        name: 'typescript',
+        message: 'Will you use typescript',
+      },
     ]);
   }
   writing() {
-    const templates = ['tmpl_package.json', 'README.md', 'webpack.config.js'];
-    templates.forEach((template) => {
-      this.fs.copyTpl(
-        this.templatePath(template),
-        this.destinationPath(template.replace('tmpl_', '')),
-        {
-          name: this.answers.name,
-          gitname: this.user.git.name(),
-          gitemail: this.user.git.email(),
-        } // user answer `title` used
-      );
-    });
-    const files = [
-      'public/favicon.ico',
-      'public/manifest.json',
-      'src/App.jsx',
-      'src/check.gif',
-      'src/index.ejs',
-      'src/index.js',
-      'src/main.css',
-      '.babelrc',
-      '.editorconfig',
-      '.eslintrc',
-      '.eslintignore',
-      '.gitignore',
-      '.prettierrc',
-      '.prettierignore',
-      'LICENSE',
-    ];
-    files.forEach((file) => {
-      this.fs.copy(this.templatePath(file), this.destinationPath(file));
-    });
-  }
-  installingDeps() {
-    const devDeps = [
-      '@babel/core',
-      '@babel/preset-env',
-      '@babel/preset-react',
-      'babel-loader',
-      'clean-webpack-plugin',
-      'copy-webpack-plugin',
-      'css-loader',
-      'eslint',
-      'eslint-config-airbnb',
-      'eslint-config-prettier',
-      'eslint-plugin-import',
-      'eslint-plugin-jsx-a11y',
-      'eslint-plugin-prettier',
-      'eslint-plugin-react',
-      'eslint-plugin-react-hooks',
-      'html-webpack-plugin',
-      'husky',
-      'prettier',
-      'pretty-quick',
-      'style-loader',
-      'webpack',
-      'webpack-cli',
-      'webpack-dev-server',
-    ];
-    const deps = ['react', 'react-dom', 'prop-types'];
-    if (this.answers.npm_yarn === 'npm') {
-      this.npmInstall(devDeps, { 'save-dev': true });
-      this.npmInstall(deps, { 'save-dev': false });
+    const config = {
+      name: this.answers.name,
+      gitname: this.user.git.name(),
+      gitemail: this.user.git.email(),
+      npm: this.answers.npm_yarn === 'npm',
+      yarn: this.answers.npm_yarn === 'yarn',
+    };
+    if (this.answers.typescript) {
+      this.composeWith(require.resolve('../ts'), config);
     } else {
-      this.yarnInstall(devDeps, { dev: true });
-      this.yarnInstall(deps, { dev: false });
+      this.composeWith(require.resolve('../js'), config);
     }
   }
   end() {

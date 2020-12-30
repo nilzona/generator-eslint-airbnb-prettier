@@ -1,0 +1,23 @@
+{
+  "name": "<%= name %>",
+  "version": "0.1.0",
+  "description": "",
+  "author": {
+    "name": "<%= gitname %>",
+    "email": "<%= gitemail %>"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "start": "webpack serve --mode=development --progress",
+    "build": "webpack --mode=production --progress",
+    "lint": "eslint src --ext .js --ext .jsx --ext .ts --ext .tsx",
+    "format": "prettier * --write"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
