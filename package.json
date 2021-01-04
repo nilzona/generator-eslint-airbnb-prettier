@@ -5,7 +5,7 @@
     "email": "nilssonanders79@gmail.com"
   },
   "homepage": "https://github.com/nilzona/generator-react-eslint-airbnb-prettier",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Creates a web project with tooling from airbnb eslint and prettier",
   "files": [
     "generators"
